@@ -55,10 +55,31 @@ const categoryIcons = {
   "Liebe & Sexualität": <Brain className="w-5 h-5 inline-block mr-2 text-purple-600" />,
 };
 
-const drawAllQuestions = (filter: string[] | null = null) => {
+const languages = [
+  "Deutsch",
+  "Englisch",
+  "Französisch",
+  "Spanisch",
+  "Portugiesisch",
+  "Türkisch",
+];
+
+const drawAllQuestions = async (filter: string[] | null = null, lang = "Deutsch") => {
   const randomQuestions: Record<string, string> = {};
   for (const category in categories) {
     if (!filter || filter.includes(category)) {
+      try {
+        const res = await fetch(
+          `/api/question?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(lang)}`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          randomQuestions[category] = data.question;
+          continue;
+        }
+      } catch (e) {
+        // fall back to local list
+      }
       const list = categories[category];
       const random = list[Math.floor(Math.random() * list.length)];
       randomQuestions[category] = random;
@@ -71,6 +92,7 @@ export default function DeepTalkApp() {
   const [cardContent, setCardContent] = useState<Record<string, string> | null>(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const [enabledCategories, setEnabledCategories] = useState<string[]>(() => Object.keys(categories));
+  const [language, setLanguage] = useState<string>("Deutsch");
 
   const toggleCategory = (category: string) => {
     setEnabledCategories((prev) =>
@@ -80,8 +102,8 @@ export default function DeepTalkApp() {
 
   const handleDrawAll = () => {
     setIsFlipped(true);
-    setTimeout(() => {
-      setCardContent(drawAllQuestions(enabledCategories));
+    setTimeout(async () => {
+      setCardContent(await drawAllQuestions(enabledCategories, language));
       setIsFlipped(false);
     }, 400);
   };
@@ -89,6 +111,19 @@ export default function DeepTalkApp() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-4 flex flex-col items-center space-y-6">
       <h1 className="text-3xl font-bold tracking-tight text-center">Deep Talk – Fragen aus allen Kategorien</h1>
+
+
+      <div className="fixed top-1/2 right-0 transform -translate-y-1/2 bg-white border rounded-l shadow p-2 space-y-1">
+        {languages.map((lang) => (
+          <button
+            key={lang}
+            onClick={() => setLanguage(lang)}
+            className={`block px-3 py-1 text-sm rounded ${language === lang ? 'bg-black text-white' : 'bg-gray-100 text-gray-800'}`}
+          >
+            {lang}
+          </button>
+        ))}
+      </div>
 
       <div className="flex flex-wrap gap-2 justify-center">
         {Object.keys(categories).map((category) => {
