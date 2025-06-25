@@ -55,10 +55,22 @@ const categoryIcons = {
   "Liebe & Sexualität": <Brain className="w-5 h-5 inline-block mr-2 text-purple-600" />,
 };
 
-const drawAllQuestions = (filter: string[] | null = null) => {
+const drawAllQuestions = async (filter: string[] | null = null) => {
   const randomQuestions: Record<string, string> = {};
   for (const category in categories) {
     if (!filter || filter.includes(category)) {
+      try {
+        const res = await fetch(
+          `/api/question?category=${encodeURIComponent(category)}`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          randomQuestions[category] = data.question;
+          continue;
+        }
+      } catch (e) {
+        // fall back to local list
+      }
       const list = categories[category];
       const random = list[Math.floor(Math.random() * list.length)];
       randomQuestions[category] = random;
@@ -80,8 +92,8 @@ export default function DeepTalkApp() {
 
   const handleDrawAll = () => {
     setIsFlipped(true);
-    setTimeout(() => {
-      setCardContent(drawAllQuestions(enabledCategories));
+    setTimeout(async () => {
+      setCardContent(await drawAllQuestions(enabledCategories));
       setIsFlipped(false);
     }, 400);
   };
