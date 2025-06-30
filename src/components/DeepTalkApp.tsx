@@ -109,20 +109,21 @@ export default function DeepTalkApp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-4 flex flex-col items-center space-y-6">
+    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-4 flex flex-col items-center space-y-6">
       <h1 className="text-3xl font-bold tracking-tight text-center">Deep Talk – Fragen aus allen Kategorien</h1>
 
-
-      <div className="fixed top-1/2 right-0 transform -translate-y-1/2 bg-white border rounded-l shadow p-2 space-y-1">
-        {languages.map((lang) => (
-          <button
-            key={lang}
-            onClick={() => setLanguage(lang)}
-            className={`block px-3 py-1 text-sm rounded ${language === lang ? 'bg-black text-white' : 'bg-gray-100 text-gray-800'}`}
-          >
-            {lang}
-          </button>
-        ))}
+      <div className="absolute top-2 right-2">
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+          className="border rounded px-2 py-1 text-sm"
+        >
+          {languages.map((lang) => (
+            <option key={lang} value={lang}>
+              {lang}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="flex flex-wrap gap-2 justify-center">
