@@ -1,6 +1,8 @@
 export async function GET(request) {
-  const { searchParams } = new URL(request.url);
+  const searchParams = new URL(request.url).searchParams;
   const category = searchParams.get("category") || "";
+  const lang = searchParams.get("lang") || "Deutsch";
+
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return new Response(
@@ -12,7 +14,7 @@ export async function GET(request) {
     );
   }
 
-  const prompt = `Stelle eine tiefgr\u00fcndige Frage aus der Kategorie "${category}" auf Deutsch.`;
+  const prompt = `Stelle eine tiefgründige Frage aus der Kategorie "${category}" auf ${lang}.`;
 
   const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
@@ -23,7 +25,7 @@ export async function GET(request) {
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
       messages: [
-        { role: "system", content: "Du generierst kurze, tiefgr\u00fcndige Fragen." },
+        { role: "system", content: "Du generierst kurze, tiefgründige Fragen." },
         { role: "user", content: prompt },
       ],
       temperature: 0.7,
@@ -45,8 +47,12 @@ export async function GET(request) {
 
   const data = await openaiRes.json();
   const question = data.choices?.[0]?.message?.content?.trim();
+
   return new Response(
     JSON.stringify({ question }),
-    { status: 200, headers: { "content-type": "application/json" } }
+    {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    }
   );
 }

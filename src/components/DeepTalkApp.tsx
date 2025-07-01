@@ -55,13 +55,30 @@ const categoryIcons = {
   "Liebe & Sexualität": <Brain className="w-5 h-5 inline-block mr-2 text-purple-600" />,
 };
 
+t1jwym-codex/ki-gestützte-fragen-generieren
+const languages = [
+  "Deutsch",
+  "Englisch",
+  "Französisch",
+  "Spanisch",
+  "Portugiesisch",
+  "Türkisch",
+];
+
+const drawAllQuestions = async (filter: string[] | null = null, lang = "Deutsch") => {
+
 const drawAllQuestions = async (filter: string[] | null = null) => {
+main
   const randomQuestions: Record<string, string> = {};
   for (const category in categories) {
     if (!filter || filter.includes(category)) {
       try {
         const res = await fetch(
+t1jwym-codex/ki-gestützte-fragen-generieren
+          `/api/question?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(lang)}`
+
           `/api/question?category=${encodeURIComponent(category)}`
+main
         );
         if (res.ok) {
           const data = await res.json();
@@ -83,6 +100,7 @@ export default function DeepTalkApp() {
   const [cardContent, setCardContent] = useState<Record<string, string> | null>(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const [enabledCategories, setEnabledCategories] = useState<string[]>(() => Object.keys(categories));
+  const [language, setLanguage] = useState<string>("Deutsch");
 
   const toggleCategory = (category: string) => {
     setEnabledCategories((prev) =>
@@ -93,14 +111,32 @@ export default function DeepTalkApp() {
   const handleDrawAll = () => {
     setIsFlipped(true);
     setTimeout(async () => {
+t1jwym-codex/ki-gestützte-fragen-generieren
+      setCardContent(await drawAllQuestions(enabledCategories, language));
+
       setCardContent(await drawAllQuestions(enabledCategories));
+main
       setIsFlipped(false);
     }, 400);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-4 flex flex-col items-center space-y-6">
+    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-4 flex flex-col items-center space-y-6">
       <h1 className="text-3xl font-bold tracking-tight text-center">Deep Talk – Fragen aus allen Kategorien</h1>
+
+      <div className="absolute top-2 right-2">
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+          className="border rounded px-2 py-1 text-sm"
+        >
+          {languages.map((lang) => (
+            <option key={lang} value={lang}>
+              {lang}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="flex flex-wrap gap-2 justify-center">
         {Object.keys(categories).map((category) => {
