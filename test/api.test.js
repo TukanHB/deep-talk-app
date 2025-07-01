@@ -25,19 +25,18 @@ test('GET returns question from OpenAI response and uses lang', async () => {
   const req = new Request('http://localhost/api/question?category=Test&lang=Englisch');
   const res = await GET(req);
   const data = await res.json();
-  assert.equal(data.question, 'Frage');
+  assert.strictEqual(data.question, 'Frage');
 });
 
 test('GET handles OpenAI failure', async () => {
   global.fetch = async () => ({ ok: false, text: async () => 'error' });
+
   const req = new Request('http://localhost/api/question?category=Test&lang=Deutsch');
   const res = await GET(req);
-  assert.equal(res.status, 500);
+  assert.strictEqual(res.status, 500);
 });
 
-// restore fetch after tests
 test.after(() => {
   global.fetch = originalFetch;
   process.env.OPENAI_API_KEY = originalKey;
 });
-
