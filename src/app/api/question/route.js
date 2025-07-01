@@ -3,8 +3,8 @@ export async function GET(request) {
   const category = searchParams.get("category") || "";
   const lang = searchParams.get("lang") || "Deutsch";
 
-  const apikey = process.env.OPENAI_API_KEY;
-  if (!apikey) {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
     return new Response(
       JSON.stringify({ error: "Missing OpenAI key" }),
       {
@@ -20,22 +20,39 @@ export async function GET(request) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apikey}`,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
       messages: [
-        {
-          role: "user",
-          content: prompt,
-        },
+        { role: "system", content: "Du generierst kurze, tiefgründige Fragen." },
+        { role: "user", content: prompt },
       ],
+      temperature: 0.7,
+      max_tokens: 50,
     }),
   });
 
-  const data = await openaiRes.json();
+  if (!openaiRes.ok) {
+    const errorText = await openaiRes.text();
+    console.error("OpenAI error:", errorText);
+    return new Response(
+      JSON.stringify({ error: "OpenAI request failed" }),
+      {
+        status: 500,
+        headers: { "content-type": "application/json" },
+      }
+    );
+  }
 
-  return new Response(JSON.stringify({ question: data.choices[0].message.content }), {
-    headers: { "content-type": "application/json" },
-  });
+  const data = await openaiRes.json();
+  const question = data.choices?.[0]?.message?.content?.trim();
+
+  return new Response(
+    JSON.stringify({ question }),
+    {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    }
+  );
 }

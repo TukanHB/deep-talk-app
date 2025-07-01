@@ -55,6 +55,7 @@ const categoryIcons = {
   "Liebe & Sexualität": <Brain className="w-5 h-5 inline-block mr-2 text-purple-600" />,
 };
 
+t1jwym-codex/ki-gestützte-fragen-generieren
 const languages = [
   "Deutsch",
   "Englisch",
@@ -65,12 +66,19 @@ const languages = [
 ];
 
 const drawAllQuestions = async (filter: string[] | null = null, lang = "Deutsch") => {
+
+const drawAllQuestions = async (filter: string[] | null = null) => {
+main
   const randomQuestions: Record<string, string> = {};
   for (const category in categories) {
     if (!filter || filter.includes(category)) {
       try {
         const res = await fetch(
+t1jwym-codex/ki-gestützte-fragen-generieren
           `/api/question?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(lang)}`
+
+          `/api/question?category=${encodeURIComponent(category)}`
+main
         );
         if (res.ok) {
           const data = await res.json();
@@ -103,7 +111,11 @@ export default function DeepTalkApp() {
   const handleDrawAll = () => {
     setIsFlipped(true);
     setTimeout(async () => {
+t1jwym-codex/ki-gestützte-fragen-generieren
       setCardContent(await drawAllQuestions(enabledCategories, language));
+
+      setCardContent(await drawAllQuestions(enabledCategories));
+main
       setIsFlipped(false);
     }, 400);
   };
