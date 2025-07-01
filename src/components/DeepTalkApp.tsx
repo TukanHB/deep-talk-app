@@ -77,9 +77,7 @@ main
 t1jwym-codex/ki-gestützte-fragen-generieren
           `/api/question?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(lang)}`
 
-          `/api/question?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(lang)}
-`
-main
+          `/api/question?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(lang)}`
         );
         if (res.ok) {
           const data = await res.json();
