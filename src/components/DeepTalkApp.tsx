@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, Heart, Brain, Globe, Star, Flame, Check } from "lucide-react";
 
+// Kategorien und Beispiel-Fragen
 const categories = {
   "Identität & Selbstbild": [
     "Wer bist du, wenn niemand hinsieht?",
@@ -37,6 +38,7 @@ const categories = {
   ],
 };
 
+// Farben für die Kategorien
 const categoryColors = {
   "Identität & Selbstbild": "bg-yellow-100 text-yellow-800 border-yellow-300",
   "Leben & Tod": "bg-red-100 text-red-800 border-red-300",
@@ -46,6 +48,7 @@ const categoryColors = {
   "Liebe & Sexualität": "bg-purple-100 text-purple-800 border-purple-300",
 };
 
+// Icons für die Kategorien
 const categoryIcons = {
   "Identität & Selbstbild": <User className="w-5 h-5 inline-block mr-2 text-yellow-600" />,
   "Leben & Tod": <Flame className="w-5 h-5 inline-block mr-2 text-red-600" />,
@@ -55,7 +58,7 @@ const categoryIcons = {
   "Liebe & Sexualität": <Brain className="w-5 h-5 inline-block mr-2 text-purple-600" />,
 };
 
-t1jwym-codex/ki-gestützte-fragen-generieren
+// Sprachauswahl
 const languages = [
   "Deutsch",
   "Englisch",
@@ -65,18 +68,13 @@ const languages = [
   "Türkisch",
 ];
 
+// KI-Fragen ziehen
 const drawAllQuestions = async (filter: string[] | null = null, lang = "Deutsch") => {
-
-const drawAllQuestions = async (filter: string[] | null = null) => {
-
   const randomQuestions: Record<string, string> = {};
   for (const category in categories) {
     if (!filter || filter.includes(category)) {
       try {
         const res = await fetch(
-t1jwym-codex/ki-gestützte-fragen-generieren
-          `/api/question?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(lang)}`
-
           `/api/question?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(lang)}`
         );
         if (res.ok) {
@@ -85,7 +83,7 @@ t1jwym-codex/ki-gestützte-fragen-generieren
           continue;
         }
       } catch (e) {
-        // fall back to local list
+        // Fallback auf lokale Fragenliste
       }
       const list = categories[category];
       const random = list[Math.floor(Math.random() * list.length)];
@@ -110,11 +108,7 @@ export default function DeepTalkApp() {
   const handleDrawAll = () => {
     setIsFlipped(true);
     setTimeout(async () => {
-t1jwym-codex/ki-gestützte-fragen-generieren
       setCardContent(await drawAllQuestions(enabledCategories, language));
-
-      setCardContent(await drawAllQuestions(enabledCategories));
-main
       setIsFlipped(false);
     }, 400);
   };
