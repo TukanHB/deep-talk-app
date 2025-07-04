@@ -68,7 +68,7 @@ const languages = [
 const drawAllQuestions = async (filter: string[] | null = null, lang = "Deutsch") => {
 
 const drawAllQuestions = async (filter: string[] | null = null) => {
-main
+
   const randomQuestions: Record<string, string> = {};
   for (const category in categories) {
     if (!filter || filter.includes(category)) {
