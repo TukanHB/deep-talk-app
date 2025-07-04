@@ -68,7 +68,7 @@ const languages = [
   "Türkisch",
 ];
 
-// KI-Fragen ziehen
+// KI-Fragen ziehen (mit Fallback auf lokale Fragen)
 const drawAllQuestions = async (filter: string[] | null = null, lang = "Deutsch") => {
   const randomQuestions: Record<string, string> = {};
   for (const category in categories) {
