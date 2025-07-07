@@ -1,4 +1,7 @@
 export async function GET(request) {
+  // Debug-Log für deinen API-Key
+  console.log("API Key:", process.env.OPENAI_API_KEY);
+
   const searchParams = new URL(request.url).searchParams;
   const category = searchParams.get("category") || "";
   const lang = searchParams.get("lang") || "Deutsch";

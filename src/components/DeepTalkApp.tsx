@@ -114,8 +114,10 @@ export default function DeepTalkApp() {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-4 flex flex-col items-center space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight text-center">Deep Talk – Fragen aus allen Kategorien</h1>
+    <div className="relative w-full max-w-md mx-auto min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-200">
+      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center mt-6 mb-2">
+        Deep Talk – Fragen
+      </h1>
 
       <div className="absolute top-2 right-2">
         <select
@@ -131,14 +133,14 @@ export default function DeepTalkApp() {
         </select>
       </div>
 
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center px-2 mb-4 overflow-x-auto">
         {Object.keys(categories).map((category) => {
           const isActive = enabledCategories.includes(category);
           return (
             <button
               key={category}
               onClick={() => toggleCategory(category)}
-              className={`px-3 py-1 rounded-full border text-sm font-medium flex items-center gap-1 transition ${
+              className={`px-3 py-1 rounded-full border text-xs sm:text-sm font-medium flex items-center gap-1 transition ${
                 isActive
                   ? `${categoryColors[category]} border-opacity-100`
                   : "bg-gray-200 text-gray-500 border-gray-300"
@@ -152,43 +154,48 @@ export default function DeepTalkApp() {
 
       <button
         onClick={handleDrawAll}
-        className="px-6 py-2 bg-black text-white rounded-full text-lg hover:bg-gray-800 transition"
+        className="px-6 py-3 bg-black text-white rounded-full text-lg hover:bg-gray-800 transition mb-4 mx-4"
+        style={{ minHeight: 48 }}
       >
         Karte mit ausgewählten Kategorien ziehen
       </button>
 
-      <div className="perspective-1000 w-full max-w-3xl">
-        <div
-          className={`transition-transform duration-500 transform-style-preserve-3d ${
-            isFlipped ? "rotate-y-180" : ""
-          }`}
-        >
-          <AnimatePresence>
-            {cardContent && (
-              <motion.div
-                key={JSON.stringify(cardContent)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6 }}
-                className="rounded-[1.25rem] shadow-2xl border border-gray-300 bg-white p-6 sm:p-10 space-y-6 backface-hidden"
-              >
-                {Object.entries(cardContent).map(([category, question]) => (
-                  <div
-                    key={category}
-                    className={`p-4 sm:p-5 rounded-xl border ${
-                      categoryColors[category] || "bg-gray-200 text-gray-800 border-gray-300"
-                    }`}
+      <div className="flex-1 flex items-center justify-center w-full px-2">
+        <div className="w-full">
+          <div className="perspective-1000 w-full">
+            <div
+              className={`transition-transform duration-500 transform-style-preserve-3d ${
+                isFlipped ? "rotate-y-180" : ""
+              }`}
+            >
+              <AnimatePresence>
+                {cardContent && (
+                  <motion.div
+                    key={JSON.stringify(cardContent)}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -30 }}
+                    transition={{ duration: 0.6 }}
+                    className="rounded-xl shadow-2xl border border-gray-300 bg-white p-4 sm:p-8 space-y-4 sm:space-y-6 backface-hidden"
                   >
-                    <h2 className="font-semibold text-lg sm:text-xl mb-2 flex items-center">
-                      {categoryIcons[category]} {category}
-                    </h2>
-                    <p className="text-base sm:text-lg leading-relaxed">{question}</p>
-                  </div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+                    {Object.entries(cardContent).map(([category, question]) => (
+                      <div
+                        key={category}
+                        className={`p-3 sm:p-5 rounded-xl border mb-2 ${
+                          categoryColors[category] || "bg-gray-200 text-gray-800 border-gray-300"
+                        }`}
+                      >
+                        <h2 className="font-semibold text-base sm:text-lg mb-2 flex items-center">
+                          {categoryIcons[category]} {category}
+                        </h2>
+                        <p className="text-sm sm:text-base leading-relaxed">{question}</p>
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
     </div>
