@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 3007",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --test"
+    "test": "node --test",
+    "fixport": "kill -9 $(lsof -ti :3007) || true && npm run dev"
   },
   "dependencies": {
     "framer-motion": "^12.19.1",
