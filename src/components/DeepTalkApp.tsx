@@ -99,6 +99,43 @@ export default function DeepTalkApp() {
   const [enabledCategories, setEnabledCategories] = useState<string[]>(() => Object.keys(categories));
   const [language, setLanguage] = useState<string>("Deutsch");
 
+  // Landing-Page Sichtbarkeit
+  const [showLanding, setShowLanding] = useState(true);
+
+  // Einfache i18n-Texte für Landing Page & Button
+  const i18n: Record<string, { title: string; subtitle: string; start: string }> = {
+    Deutsch: {
+      title: "Herzlich willkommen bei Vox Cogitationis",
+      subtitle: "„Die Stimme des Denkens“. Viel Spaß bei eurer Unterhaltung.",
+      start: "Los",
+    },
+    Englisch: {
+      title: "Welcome to Vox Cogitationis",
+      subtitle: "“The Voice of Thinking”. Enjoy your conversation.",
+      start: "Start",
+    },
+    Französisch: {
+      title: "Bienvenue sur Vox Cogitationis",
+      subtitle: "« La voix de la pensée ». Bonne conversation !",
+      start: "Commencer",
+    },
+    Spanisch: {
+      title: "Bienvenidos a Vox Cogitationis",
+      subtitle: "« La voz del pensamiento ». Disfruten de su conversación.",
+      start: "Empezar",
+    },
+    Portugiesisch: {
+      title: "Bem-vindos a Vox Cogitationis",
+      subtitle: "“A voz do pensamento”. Aproveitem a conversa.",
+      start: "Começar",
+    },
+    Türkisch: {
+      title: "Vox Cogitationis’e hoş geldiniz",
+      subtitle: "“Düşüncenin Sesi”. Sohbetinizin tadını çıkarın.",
+      start: "Başla",
+    },
+  };
+
   const toggleCategory = (category: string) => {
     setEnabledCategories((prev) =>
       prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
@@ -113,7 +150,8 @@ export default function DeepTalkApp() {
     }, 400);
   };
 
-  return (
+  // Main UI
+  const mainUI = (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-4 flex flex-col items-center space-y-6">
       <h1 className="text-3xl font-bold tracking-tight text-center">Deep Talk – Fragen aus allen Kategorien</h1>
 
@@ -193,4 +231,42 @@ export default function DeepTalkApp() {
       </div>
     </div>
   );
+
+  // Landing Page UI
+  if (showLanding) {
+    return (
+      <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-6 flex flex-col items-center justify-center text-center space-y-6">
+        {/* Sprachauswahl */}
+        <div className="absolute top-4 right-4">
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className="border rounded px-3 py-2 text-sm bg-white shadow"
+          >
+            {languages.map((lang) => (
+              <option key={lang} value={lang}>
+                {lang}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          {i18n[language]?.title || i18n["Deutsch"].title}
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-700 max-w-2xl">
+          {i18n[language]?.subtitle || i18n["Deutsch"].subtitle}
+        </p>
+
+        <button
+          onClick={() => setShowLanding(false)}
+          className="mt-4 inline-flex items-center justify-center rounded-xl px-6 py-3 text-base font-semibold bg-black text-white hover:opacity-90 transition shadow-lg"
+        >
+          {i18n[language]?.start || i18n["Deutsch"].start}
+        </button>
+      </div>
+    );
+  }
+
+  return mainUI;
 }
