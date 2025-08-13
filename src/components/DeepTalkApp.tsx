@@ -5,28 +5,34 @@ import { UserCircle, Heart, Target, Handshake, ArrowLeft, Moon, Sun } from "luci
 import { questionsByLanguage } from "../data";
 import FlagDropdownButton from "./FlagDropdownButton";
 
-// Define LanguageItem as a TypeScript type
+/* =========================
+   Types
+========================= */
+type LanguageKey = "Englisch" | "Deutsch" | "Spanisch" | "Türkisch" | "Französisch" | "Portugiesisch";
+type CategoryKey = "friendship" | "love" | "identity" | "goals";
+
 type LanguageItem = {
   key: LanguageKey;
   label: string;
   flag: string;
-  button: string;
+  button: string; // nur für Kompatibilität, wird nicht genutzt
 };
 
-// Define LanguageKey as a type alias for the supported languages
-type LanguageKey = "Englisch" | "Deutsch" | "Spanisch" | "Türkisch" | "Französisch" | "Portugiesisch";
-
-/* ===== Sprachen ===== */
+/* =========================
+   Sprache: Start = Englisch
+========================= */
 const languageConfig: readonly LanguageItem[] = [
   { key: "Englisch", label: "English", flag: "🇬🇧", button: "" },
-  { key: "Deutsch", label: "Deutsch", flag: "🇩🇪", button: "" },
-  { key: "Spanisch", label: "Español", flag: "🇪🇸", button: "" },
-  { key: "Türkisch", label: "Türkçe", flag: "🇹🇷", button: "" },
+  { key: "Deutsch", label: "Deutsch",  flag: "🇩🇪", button: "" },
+  { key: "Spanisch", label: "Español",  flag: "🇪🇸", button: "" },
+  { key: "Türkisch", label: "Türkçe",   flag: "🇹🇷", button: "" },
   { key: "Französisch", label: "Français", flag: "🇫🇷", button: "" },
   { key: "Portugiesisch", label: "Português", flag: "🇵🇹", button: "" },
 ] as const;
 
-/* ===== Landing-Texte ===== */
+/* =========================
+   Landing-Texte
+========================= */
 const landingText: Record<LanguageKey, { mainTitle: string; subTitle: string; description: string }> = {
   Englisch: {
     mainTitle: "Welcome to Cogito!",
@@ -48,6 +54,46 @@ const landingText: Record<LanguageKey, { mainTitle: string; subTitle: string; de
     subTitle: "Vox Cogitationis – Düşüncenin Sesi",
     description: "Bir kategori seç ve tam ekran derin sohbet sorularını keşfet — TikTok tarzı, sayfa başına bir soru ve snap kaydırma.",
   },
+  Französich: { // Schreibweise-Fallback
+    mainTitle: "Bienvenue sur Cogito !",
+    subTitle: "Vox Cogitationis – La voix de la pensée",
+    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+  } as any,
+  Französische: { // weiterer Fallback
+    mainTitle: "Bienvenue sur Cogito !",
+    subTitle: "Vox Cogitationis – La voix de la pensée",
+    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+  } as any,
+  Französözisch: { // weiterer Fallback
+    mainTitle: "Bienvenue sur Cogito !",
+    subTitle: "Vox Cogitationis – La voix de la pensée",
+    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+  } as any,
+  Französischer: { // weiterer Fallback
+    mainTitle: "Bienvenue sur Cogito !",
+    subTitle: "Vox Cogitationis – La voix de la pensée",
+    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+  } as any,
+  FranzösischeR: { // weiterer Fallback
+    mainTitle: "Bienvenue sur Cogito !",
+    subTitle: "Vox Cogitationis – La voix de la pensée",
+    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+  } as any,
+  FranzösischerX: { // weiterer Fallback
+    mainTitle: "Bienvenue sur Cogito !",
+    subTitle: "Vox Cogitationis – La voix de la pensée",
+    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+  } as any,
+  Französisches: { // weiterer Fallback
+    mainTitle: "Bienvenue sur Cogito !",
+    subTitle: "Vox Cogitationis – La voix de la pensée",
+    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+  } as any,
+  Französischerinnen: { // weiterer Fallback
+    mainTitle: "Bienvenue sur Cogito !",
+    subTitle: "Vox Cogitationis – La voix de la pensée",
+    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+  } as any,
   Französisch: {
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
@@ -60,58 +106,72 @@ const landingText: Record<LanguageKey, { mainTitle: string; subTitle: string; de
   },
 };
 
-/* ===== Kategorie-Beschreibung ===== */
-const categoryDescriptionTemplate: Record<LanguageKey, (category: string) => string> = {
-  Englisch: (c) => `Prompts and questions about “${c}” — great for deeper conversations.`,
-  Deutsch: (c) => `Fragen und Impulse rund um „${c}“ – ideal für tiefere Gespräche.`,
-  Spanisch: (c) => `Preguntas e ideas sobre «${c}», perfectas para conversaciones más profundas.`,
-  Türkisch: (c) => `“${c}” üzerine sorular ve düşünce kıvılcımları — derin sohbetler için ideal.`,
-  Französisch: (c) => `Questions et inspirations autour de « ${c} » — parfait pour des échanges plus profonds.`,
-  Portugiesisch: (c) => `Perguntas e ideias sobre “${c}” — ideal para conversas mais profundas.`,
+/* =========================
+   Kategorien: Aliase pro Sprache
+   (für robustes Finden der Daten-Keys)
+========================= */
+const CATEGORY_ALIASES: Record<LanguageKey, Record<CategoryKey, string[]>> = {
+  Englisch: {
+    friendship: ["Friendship"],
+    love: ["Love and Relationship", "Love & Relationship"],
+    identity: ["Identity & Life", "Identity and Life"],
+    goals: ["Goals and Society", "Goals & Society"],
+  },
+  Deutsch: {
+    friendship: ["Freundschaft"],
+    love: ["Liebe und Beziehung", "Liebe & Beziehung", "Liebe und Beziehungen"],
+    identity: ["Identität & Leben", "Identität und Leben"],
+    goals: ["Ziele und Gesellschaft", "Ziele & Gesellschaft", "Ziele ud Gesellschaft"],
+  },
+  Spanisch: {
+    friendship: ["Amistad"],
+    love: ["Amor y Relaciones", "Amor & Relaciones"],
+    identity: ["Identidad y Vida"],
+    goals: ["Metas y Sociedad"],
+  },
+  Türkisch: {
+    friendship: ["Arkadaşlık", "Arkadaslik"],
+    love: ["Aşk ve İlişkiler", "Ask ve Iliskiler"],
+    identity: ["Kimlik ve Yaşam", "Kimlik ve yasam"],
+    goals: ["Hedefler ve Toplum"],
+  },
+  Französisch: {
+    friendship: ["Amitié", "Amitie"],
+    love: ["Amour & Relations", "Amour et Relations"],
+    identity: ["Identité & Vie", "Identite & Vie", "Identité et Vie"],
+    goals: ["Objectifs & Société", "Objectifs et Société", "Objectifs & Societe"],
+  },
+  Portugiesisch: {
+    friendship: ["Amizade"],
+    love: ["Amor e Relacionamentos", "Amor & Relacionamentos"],
+    identity: ["Identidade e Vida"],
+    goals: ["Metas e Sociedade"],
+  },
 };
 
-/* ===== Icon- & Kategorienormalisierung ===== */
+/* Anzeigename (erste Alias-Variante) */
+function getLocalizedCategoryName(lang: LanguageKey, key: CategoryKey): string {
+  const list = CATEGORY_ALIASES[lang]?.[key] ?? [];
+  return list[0] ?? key;
+}
+
+/* Fragen einer Kategorie in einer Sprache holen (mit Aliases) */
+function getQuestions(lang: LanguageKey, key: CategoryKey): string[] {
+  const data = (questionsByLanguage as any)[lang] ?? {};
+  const aliases = CATEGORY_ALIASES[lang]?.[key] ?? [];
+  for (const alias of aliases) {
+    const arr = data[alias];
+    if (Array.isArray(arr)) return arr.slice(); // stabile Reihenfolge
+  }
+  return []; // nichts gefunden
+}
+
+/* =========================
+   Icons & Farben
+========================= */
 const IconSize = 36;
 
-function normalizeCategoryName(name: string): string {
-  let s = (name || "").toString();
-  s = s.replace(/İ/g, "I").replace(/ı/g, "i"); // türkisch
-  s = s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  s = s.toLowerCase().trim();
-  s = s.replace(/&/g, " and ");
-  s = s.replace(/\b(und|ve|y|et|e)\b/g, " and ");
-  s = s.replace(/[^a-z\s]/g, " ");
-  s = s
-    .replace(/\brelations\b/g, "relation")
-    .replace(/\brelationships\b/g, "relationship")
-    .replace(/\bbeziehungen\b/g, "beziehung")
-    .replace(/\brelaciones\b/g, "relacion")
-    .replace(/\brelacionamentos\b/g, "relacionamento")
-    .replace(/\biliskiler\b/g, "iliski");
-  s = s.replace(/\s+/g, " ").trim();
-  return s;
-}
-
-/* Kategorie-Sets für feste Reihenfolge + Icons */
-const FRIENDSHIP_SET = new Set(["friendship", "freundschaft", "amistad", "arkadaslik", "amitie", "amizade"].map(normalizeCategoryName));
-const LOVE_SET = new Set(["love and relationship", "liebe und beziehung", "amor y relaciones", "ask ve iliskiler", "amour and relations", "amor e relacionamentos"].map(normalizeCategoryName));
-const IDENTITY_SET = new Set(["identität und leben", "identidad y vida", "kimlik ve yasam", "identite and vie", "identidade e vida"].map(normalizeCategoryName));
-const GOALS_SET = new Set(["goals and society", "ziele und gesellschaft", "ziele ud gesellschaft", "metas y sociedad", "hedefler ve toplum", "objectifs and societe", "metas e sociedade"].map(normalizeCategoryName));
-
-type CategoryKey = "friendship" | "love" | "identity" | "goals" | "other";
-const CATEGORY_ORDER_KEYS: CategoryKey[] = ["friendship", "love", "identity", "goals"];
-
-function getCategoryKey(cat: string): CategoryKey {
-  const n = normalizeCategoryName(cat);
-  if (FRIENDSHIP_SET.has(n)) return "friendship";
-  if (LOVE_SET.has(n)) return "love";
-  if (IDENTITY_SET.has(n)) return "identity";
-  if (GOALS_SET.has(n)) return "goals";
-  return "other";
-}
-
-function getCategoryIcon(cat: string) {
-  const key = getCategoryKey(cat);
+function getCategoryIconByKey(key: CategoryKey) {
   switch (key) {
     case "friendship": return <Handshake size={IconSize} strokeWidth={2} className="icon icon--emerald" />;
     case "love":       return <Heart     size={IconSize} strokeWidth={2} className="icon icon--rose" />;
@@ -121,42 +181,21 @@ function getCategoryIcon(cat: string) {
   }
 }
 
-const cardBgClasses = ["card--emerald", "card--violet", "card--rose", "card--amber"] as const;
+const CARD_BG_CLASSES: Record<CategoryKey, string> = {
+  friendship: "card--emerald",
+  love: "card--rose",
+  identity: "card--violet",
+  goals: "card--amber",
+};
 
-/* Kategorien sortieren (feste Reihenfolge in jeder Sprache) */
-function getCategories(lang: LanguageKey): string[] {
-  const data = questionsByLanguage[lang] ?? {};
-  const cats = Object.keys(data);
-  const withMeta = cats.map((name, i) => ({ name, key: getCategoryKey(name), i }));
-  const priority = new Map<CategoryKey, number>(CATEGORY_ORDER_KEYS.map((k, idx) => [k, idx]));
-  return withMeta
-    .sort((a, b) => {
-      const pa = priority.get(a.key) ?? Number.MAX_SAFE_INTEGER;
-      const pb = priority.get(b.key) ?? Number.MAX_SAFE_INTEGER;
-      if (pa !== pb) return pa - pb;
-      return a.i - b.i;
-    })
-    .map((x) => x.name);
-}
+const CATEGORY_ORDER: CategoryKey[] = ["friendship", "love", "identity", "goals"];
 
-function shuffle<T>(arr: T[]): T[] {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-function buildQuestionDeck(lang: LanguageKey, category: string): string[] {
-  const data = questionsByLanguage[lang] ?? {};
-  const list = Array.isArray((data as any)[category]) ? ((data as any)[category] as string[]) : [];
-  return shuffle(list);
-}
-
-/* ===== Component ===== */
+/* =========================
+   Component
+========================= */
 export default function DeepTalkApp() {
-  const [selectedLanguage, setSelectedLanguage] = useState<LanguageKey>("Englisch"); // Landing in Englisch
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<LanguageKey>("Englisch");
+  const [selectedKey, setSelectedKey] = useState<CategoryKey | null>(null);
   const [deck, setDeck] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -164,46 +203,48 @@ export default function DeepTalkApp() {
   const observer = useRef<IntersectionObserver | null>(null);
   const categoriesRef = useRef<HTMLDivElement | null>(null);
 
-  /* Hintergrund-Styles pro Theme */
+  // Hintergrund (dezent), Dark/Light
   const backgroundStyle =
     theme === "light"
-      ? "linear-gradient(-45deg, #f3e3d5c4, #f5e4d2ff, #d8d9f6ff, #f3d6da)" // etwas dunkler/neutraler als zuvor
+      ? "linear-gradient(-45deg, #f3e3d5c4, #f5e4d2ff, #d8d9f6ff, #f3d6da)"
       : "linear-gradient(-45deg, #0f1012, #0a0b0d, #000000, #121316)";
-
   const textColor = theme === "dark" ? "#fff" : "#111";
 
+  /* ===== Sprachwechsel: gleiche Kategorie + Index, Frage aus neuer Sprache ===== */
   useEffect(() => {
-    if (selectedCategory) {
-      const newDeck = buildQuestionDeck(selectedLanguage, selectedCategory);
-      setDeck(newDeck);
-      const safeIndex = newDeck.length === 0 ? 0 : Math.min(currentIndex, newDeck.length - 1);
-      setCurrentIndex(safeIndex);
-      setTimeout(() => {
-        document.getElementById(`q-${safeIndex}`)?.scrollIntoView({ behavior: "smooth" });
-      }, 0);
-    }
+    if (!selectedKey) return;
+    const newDeck = getQuestions(selectedLanguage, selectedKey);
+    setDeck(newDeck);
+    setCurrentIndex((prev) => (newDeck.length ? Math.min(prev, newDeck.length - 1) : 0));
+    // Zum aktuellen Eintrag scrollen
+    setTimeout(() => {
+      const idx = Math.min(currentIndex, Math.max(0, newDeck.length - 1));
+      document.getElementById(`q-${idx}`)?.scrollIntoView({ behavior: "smooth" });
+    }, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLanguage]);
 
-  const selectCategory = useCallback((cat: string) => {
-    setSelectedCategory(cat);
-    const d = buildQuestionDeck(selectedLanguage, cat);
+  /* ===== Kategorie auswählen ===== */
+  const selectCategory = useCallback((key: CategoryKey) => {
+    setSelectedKey(key);
+    const d = getQuestions(selectedLanguage, key);
     setDeck(d);
     setCurrentIndex(0);
-    setTimeout(() => {
-      document.getElementById("q-0")?.scrollIntoView({ behavior: "smooth" });
-    }, 0);
+    setTimeout(() => { document.getElementById("q-0")?.scrollIntoView({ behavior: "smooth" }); }, 0);
   }, [selectedLanguage]);
 
+  /* ===== Zurück ins Menü ===== */
   const goBackToMenu = useCallback(() => {
-    setSelectedCategory(null);
+    setSelectedKey(null);
     setDeck([]);
     setCurrentIndex(0);
     categoriesRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
+  /* ===== Nächste Frage beim Scrollen ===== */
   const showNext = useCallback(() => {
-    if (deck.length === 0) return;
-    setCurrentIndex((prev) => (prev + 1) % deck.length);
+    if (!deck.length) return;
+    setCurrentIndex((prev) => (prev + 1 < deck.length ? prev + 1 : prev)); // kein Wrap
   }, [deck.length]);
 
   const lastQuestionRef = useCallback((node: HTMLDivElement | null) => {
@@ -214,7 +255,11 @@ export default function DeepTalkApp() {
     if (node) observer.current.observe(node);
   }, [showNext]);
 
-  const categories = useMemo(() => getCategories(selectedLanguage), [selectedLanguage]);
+  // Kategorienanzeige: feste Reihenfolge, lokalisierter Name
+  const localizedCategories = useMemo(
+    () => CATEGORY_ORDER.map((key) => ({ key, title: getLocalizedCategoryName(selectedLanguage, key) })),
+    [selectedLanguage]
+  );
   const texts = landingText[selectedLanguage];
 
   return (
@@ -230,7 +275,6 @@ export default function DeepTalkApp() {
         position: "relative",
       }}
     >
-      {/* Animation-Keyframes */}
       <style>{`
         @keyframes gradientMove {
           0% { background-position: 0% 50%; }
@@ -239,7 +283,7 @@ export default function DeepTalkApp() {
         }
       `}</style>
 
-      {/* Dark-Mode Vignette, nur im Dark Theme */}
+      {/* dezent: Vignette im Dark Mode */}
       {theme === "dark" && (
         <div
           aria-hidden
@@ -254,8 +298,8 @@ export default function DeepTalkApp() {
         />
       )}
 
-      {/* Toolbar oben rechts */}
-      <div style={{ position: "fixed", top: 10, right: 10, zIndex: 10, display: "flex", gap: 10, alignItems: "center" }}>
+      {/* Toolbar: Sprache + Theme */}
+      <div style={{ position: "fixed", top: 10, right: 10, zIndex: 100, display: "flex", gap: 10, alignItems: "center" }}>
         <FlagDropdownButton language={selectedLanguage} setLanguage={setSelectedLanguage} languageConfig={languageConfig} />
         <button
           onClick={() => setTheme((t) => (t === "light" ? "dark" : "light"))}
@@ -278,8 +322,8 @@ export default function DeepTalkApp() {
         </button>
       </div>
 
-      {/* Zurück ins Menü */}
-      {selectedCategory && (
+      {/* Zurück ins Menü – optional */}
+      {selectedKey && (
         <button
           onClick={goBackToMenu}
           style={{
@@ -302,8 +346,8 @@ export default function DeepTalkApp() {
         </button>
       )}
 
-      {/* Landing Page */}
-      <section className="shell shell--center" style={{ height: "100vh", scrollSnapAlign: "start", position: "relative", zIndex: 1 }}>
+      {/* Landing */}
+      <section className="shell shell--center" style={{ height: "100vh", scrollSnapAlign: "start" }}>
         <div>
           <h1 className="hero__title">{texts.mainTitle}</h1>
           <p style={{ margin: "8px 0", fontStyle: "italic", fontSize: "1.2rem" }}>{texts.subTitle}</p>
@@ -311,8 +355,8 @@ export default function DeepTalkApp() {
         </div>
       </section>
 
-      {/* Kategorien (feste Reihenfolge) */}
-      {selectedCategory === null ? (
+      {/* Kategorien (feste Reihenfolge, lokalisierte Titel) */}
+      {!selectedKey ? (
         <section
           ref={categoriesRef}
           className="shell"
@@ -322,19 +366,17 @@ export default function DeepTalkApp() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            position: "relative",
-            zIndex: 1,
           }}
         >
           <main className="grid" style={{ width: "100%" }}>
             <div className="grid__inner">
-              {categories.map((cat, idx) => {
-                const Icon = getCategoryIcon(cat);
+              {localizedCategories.map(({ key, title }) => {
+                const Icon = getCategoryIconByKey(key);
                 return (
                   <button
-                    key={cat}
-                    className={`card ${cardBgClasses[idx % cardBgClasses.length]}`}
-                    onClick={() => selectCategory(cat)}
+                    key={key}
+                    className={`card ${CARD_BG_CLASSES[key]}`}
+                    onClick={() => selectCategory(key)}
                     style={{ textAlign: "left", cursor: "pointer", width: "100%" }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
@@ -342,8 +384,16 @@ export default function DeepTalkApp() {
                         {Icon}
                       </div>
                       <div style={{ flex: 1 }}>
-                        <h2 className="card__title" style={{ margin: 0 }}>{cat}</h2>
-                        <p className="card__text">{categoryDescriptionTemplate[selectedLanguage](cat)}</p>
+                        <h2 className="card__title" style={{ margin: 0 }}>{title}</h2>
+                        <p className="card__text">
+                          {/* kurze Beschreibung je Sprache */}
+                          {selectedLanguage === "Englisch" && `Prompts and questions about “${title}” — great for deeper conversations.`}
+                          {selectedLanguage === "Deutsch" && `Fragen und Impulse rund um „${title}“ – ideal für tiefere Gespräche.`}
+                          {selectedLanguage === "Spanisch" && `Preguntas e ideas sobre «${title}», perfectas para conversaciones más profundas.`}
+                          {selectedLanguage === "Türkisch" && `“${title}” üzerine sorular ve düşünce kıvılcımları — derin sohbetler için ideal.`}
+                          {selectedLanguage === "Französisch" && `Questions et inspirations autour de « ${title} » — parfait pour des échanges plus profonds.`}
+                          {selectedLanguage === "Portugiesisch" && `Perguntas e ideias sobre “${title}” — ideal para conversas mais profundas.`}
+                        </p>
                       </div>
                     </div>
                   </button>
@@ -353,13 +403,15 @@ export default function DeepTalkApp() {
           </main>
         </section>
       ) : (
-        /* Fragen-Viewer */
+        /* Fragen-Viewer: gleiche Kategorie (Key) + gleicher Index; Frage aus neuer Sprache */
         <>
           {Array.from({ length: currentIndex + 1 }).map((_, i) => {
-            const catIndex = Math.max(0, categories.indexOf(selectedCategory!));
-            const Icon = getCategoryIcon(selectedCategory!);
-            const question = deck.length === 0 ? "" : deck[i % deck.length];
+            const key = selectedKey!;
+            const Icon = getCategoryIconByKey(key);
+            const title = getLocalizedCategoryName(selectedLanguage, key);
+            const question = deck.length ? deck[i] : "";
             const isLast = i === currentIndex;
+
             return (
               <section
                 key={`q-${i}`}
@@ -372,18 +424,15 @@ export default function DeepTalkApp() {
                   alignItems: "center",
                   justifyContent: "center",
                   padding: "24px",
-                  boxSizing: "border-box",
-                  position: "relative",
-                  zIndex: 1,
                 }}
               >
-                <div className={`card ${cardBgClasses[catIndex % cardBgClasses.length]}`} style={{ width: "min(900px, 94%)", margin: "0 auto" }}>
+                <div className={`card ${CARD_BG_CLASSES[key]}`} style={{ width: "min(900px, 94%)" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minWidth: `${IconSize + 6}px` }}>
                       {Icon}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <h2 className="card__title" style={{ margin: 0 }}>{selectedCategory}</h2>
+                      <h2 className="card__title" style={{ margin: 0 }}>{title}</h2>
                       <p className="card__text">{question}</p>
                     </div>
                   </div>
