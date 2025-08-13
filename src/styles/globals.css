@@ -1,5 +1,5 @@
 :root{
-  --bg-from: #fff1f2;   /* rose-50 */
+  --bg-from: #fbd8da;   /* rose-50 */
   --bg-via:  #fff7ed;   /* orange-50 */
   --bg-to:   #fffbeb;   /* amber-50 */
 
@@ -83,7 +83,7 @@ body{
   transition: transform .08s ease, box-shadow .2s ease, opacity .2s ease;
 }
 .btn--primary{
-  background:#111;
+  background:#727070;
   color:#fff;
   box-shadow: var(--shadow-1);
 }
@@ -130,10 +130,22 @@ body{
 }
 .card:hover{ transform: translateY(-1px); box-shadow: 0 10px 30px rgba(0,0,0,.08); }
 .card__title{
-  display:flex; align-items:center; gap:8px;
-  font-weight:700; margin:0 0 6px 0; font-size: clamp(16px, 2vw, 18px);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+  margin:0;
+  font-size: clamp(16px, 2vw, 18px);
 }
-.card__text{ margin:0; line-height:1.6; font-size: clamp(14px, 1.8vw, 16px); color: var(--muted); }
+.card__icon .icon{
+  font-size: 28px; /* NEU: Icon größer */
+}
+.card__text{
+  margin: 0; /* NEU: direkt unter der Überschrift */
+  line-height:1.6;
+  font-size: clamp(14px, 1.8vw, 16px);
+  color: var(--muted);
+}
 
 /* Subtile Farbverläufe je Karte */
 .card--amber{  background: linear-gradient(135deg, var(--amber-50), #fff 60%); }
@@ -151,3 +163,17 @@ body{
 .icon--sky{ color:#0284c7; }
 .icon--emerald{ color:#059669; }
 .icon--violet{ color:#7c3aed; }
+
+/* Responsive Layout Tweaks */
+@media (max-width: 420px){
+  .header{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .btn{ width: 100%; }
+  .ui-select{ width: 100%; justify-content: space-between; }
+}
+@media (min-width: 600px){
+  .grid__inner{ grid-template-columns: 1fr 1fr; }
+}
