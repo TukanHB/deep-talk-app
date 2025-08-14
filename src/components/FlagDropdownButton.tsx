@@ -13,8 +13,8 @@ export type LanguageKey =
 
 export interface LanguageItem {
   key: LanguageKey;
-  label: string;   // Anzeigename, z. B. "English"
-  flag: string;    // Emoji, z. B. "🇬🇧" – wird versucht, aber es gibt Fallback
+  label: string; // Anzeigename, z. B. "English"
+  flag: string; // Emoji, z. B. "🇬🇧" – wird versucht, aber es gibt Fallback
   button?: string; // optional – ungenutzt, nur für alte Typen
 }
 
@@ -24,15 +24,15 @@ const EMOJI_FONT_STACK =
 
 // Fallback-Badge-Farben pro Sprache (dezent, gut sichtbar)
 const FALLBACK_COLORS: Record<LanguageKey, { bg: string; fg: string; code: string }> = {
-  Englisch:      { bg: "#1e3a8a", fg: "#ffffff", code: "EN" },
-  Deutsch:       { bg: "#111827", fg: "#fbbf24", code: "DE" },
-  Spanisch:      { bg: "#b91c1c", fg: "#fde68a", code: "ES" },
-  Türkisch:      { bg: "#991b1b", fg: "#ffffff", code: "TR" },
-  Französische:  { bg: "#1f2937", fg: "#93c5fd", code: "FR" }, // nur falls jemand "Französische" schreibt
-  Französich:    { bg: "#1f2937", fg: "#93c5fd", code: "FR" }, // Schreibfehler-Schutz
+  Englisch: { bg: "#1e3a8a", fg: "#ffffff", code: "EN" },
+  Deutsch: { bg: "#111827", fg: "#fbbf24", code: "DE" },
+  Spanisch: { bg: "#b91c1c", fg: "#fde68a", code: "ES" },
+  Türkisch: { bg: "#991b1b", fg: "#ffffff", code: "TR" },
+  Französische: { bg: "#1f2937", fg: "#93c5fd", code: "FR" }, // nur falls jemand "Französische" schreibt
+  Französich: { bg: "#1f2937", fg: "#93c5fd", code: "FR" }, // Schreibfehler-Schutz
   FranzösischeR: { bg: "#1f2937", fg: "#93c5fd", code: "FR" }, // weiterer Schutz
   // KORREKTER Schlüssel unten:
-  FranzösichX:   { bg: "#1f2937", fg: "#93c5fd", code: "FR" },
+  FranzösichX: { bg: "#1f2937", fg: "#93c5fd", code: "FR" },
   // -> wir definieren die korrekte Zeile gleich:
 } as any;
 
@@ -57,13 +57,7 @@ function useEmojiVisibility(emoji: string) {
   return { visible, spanRef };
 }
 
-function FlagGlyph({
-  emoji,
-  labelCode,
-}: {
-  emoji: string;
-  labelCode: string;
-}) {
+function FlagGlyph({ emoji, labelCode }: { emoji: string; labelCode: string }) {
   const { visible, spanRef } = useEmojiVisibility(emoji);
 
   return (
@@ -177,7 +171,13 @@ export default function FlagDropdownButton({
       >
         <FlagGlyph emoji={current?.flag ?? ""} labelCode={fallback.code} />
         <span style={{ fontSize: 14, fontWeight: 600 }}>{current?.label ?? "Language"}</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ marginLeft: 2, opacity: 0.7 }}>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          style={{ marginLeft: 2, opacity: 0.7 }}
+        >
           <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
       </button>
@@ -201,7 +201,11 @@ export default function FlagDropdownButton({
           }}
         >
           {languageConfig.map((lang) => {
-            const colors = (FALLBACK_COLORS as any)[lang.key] ?? { bg: "#111827", fg: "#fff", code: "??" };
+            const colors = (FALLBACK_COLORS as any)[lang.key] ?? {
+              bg: "#111827",
+              fg: "#fff",
+              code: "??",
+            };
             const isActive = lang.key === language;
             return (
               <button

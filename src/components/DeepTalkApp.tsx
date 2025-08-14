@@ -8,7 +8,13 @@ import FlagDropdownButton from "./FlagDropdownButton";
 /* =========================
    Types
 ========================= */
-type LanguageKey = "Englisch" | "Deutsch" | "Spanisch" | "Türkisch" | "Französisch" | "Portugiesisch";
+type LanguageKey =
+  | "Englisch"
+  | "Deutsch"
+  | "Spanisch"
+  | "Türkisch"
+  | "Französisch"
+  | "Portugiesisch";
 type CategoryKey = "friendship" | "love" | "identity" | "goals";
 
 type LanguageItem = {
@@ -23,9 +29,9 @@ type LanguageItem = {
 ========================= */
 const languageConfig: readonly LanguageItem[] = [
   { key: "Englisch", label: "English", flag: "🇬🇧", button: "" },
-  { key: "Deutsch", label: "Deutsch",  flag: "🇩🇪", button: "" },
-  { key: "Spanisch", label: "Español",  flag: "🇪🇸", button: "" },
-  { key: "Türkisch", label: "Türkçe",   flag: "🇹🇷", button: "" },
+  { key: "Deutsch", label: "Deutsch", flag: "🇩🇪", button: "" },
+  { key: "Spanisch", label: "Español", flag: "🇪🇸", button: "" },
+  { key: "Türkisch", label: "Türkçe", flag: "🇹🇷", button: "" },
   { key: "Französisch", label: "Français", flag: "🇫🇷", button: "" },
   { key: "Portugiesisch", label: "Português", flag: "🇵🇹", button: "" },
 ] as const;
@@ -33,76 +39,101 @@ const languageConfig: readonly LanguageItem[] = [
 /* =========================
    Landing-Texte
 ========================= */
-const landingText: Record<LanguageKey, { mainTitle: string; subTitle: string; description: string }> = {
+const landingText: Record<
+  LanguageKey,
+  { mainTitle: string; subTitle: string; description: string }
+> = {
   Englisch: {
     mainTitle: "Welcome to Cogito!",
     subTitle: "Vox Cogitationis – The Voice of Thinking",
-    description: "Choose a category and explore full-screen deep-talk questions — one per page with TikTok-style snap scroll.",
+    description:
+      "Choose a category and explore full-screen deep-talk questions — one per page with TikTok-style snap scroll.",
   },
   Deutsch: {
     mainTitle: "Willkommen bei Cogito!",
     subTitle: "Vox Cogitationis – Die Stimme des Denkens",
-    description: "Wähle eine Kategorie und entdecke Deep-Talk-Fragen im Vollbild – eine pro Seite mit Snap-Scroll wie bei TikTok.",
+    description:
+      "Wähle eine Kategorie und entdecke Deep-Talk-Fragen im Vollbild – eine pro Seite mit Snap-Scroll wie bei TikTok.",
   },
   Spanisch: {
     mainTitle: "¡Bienvenido a Cogito!",
     subTitle: "Vox Cogitationis – La voz del pensamiento",
-    description: "Elige una categoría y explora preguntas de conversación profunda a pantalla completa: una por página con desplazamiento al estilo TikTok.",
+    description:
+      "Elige una categoría y explora preguntas de conversación profunda a pantalla completa: una por página con desplazamiento al estilo TikTok.",
   },
   Türkisch: {
     mainTitle: "Cogito'ya hoş geldin!",
     subTitle: "Vox Cogitationis – Düşüncenin Sesi",
-    description: "Bir kategori seç ve tam ekran derin sohbet sorularını keşfet — TikTok tarzı, sayfa başına bir soru ve snap kaydırma.",
+    description:
+      "Bir kategori seç ve tam ekran derin sohbet sorularını keşfet — TikTok tarzı, sayfa başına bir soru ve snap kaydırma.",
   },
-  Französich: { // Schreibweise-Fallback
+  Französich: {
+    // Schreibweise-Fallback
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   } as any,
-  Französische: { // weiterer Fallback
+  Französische: {
+    // weiterer Fallback
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   } as any,
-  Französözisch: { // weiterer Fallback
+  Französözisch: {
+    // weiterer Fallback
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   } as any,
-  Französischer: { // weiterer Fallback
+  Französischer: {
+    // weiterer Fallback
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   } as any,
-  FranzösischeR: { // weiterer Fallback
+  FranzösischeR: {
+    // weiterer Fallback
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   } as any,
-  FranzösischerX: { // weiterer Fallback
+  FranzösischerX: {
+    // weiterer Fallback
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   } as any,
-  Französisches: { // weiterer Fallback
+  Französisches: {
+    // weiterer Fallback
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   } as any,
-  Französischerinnen: { // weiterer Fallback
+  Französischerinnen: {
+    // weiterer Fallback
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   } as any,
   Französisch: {
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
-    description: "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
+    description:
+      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
   },
   Portugiesisch: {
     mainTitle: "Bem-vindo ao Cogito!",
     subTitle: "Vox Cogitationis – A Voz do Pensamento",
-    description: "Escolhe uma categoria e explora perguntas de conversa profunda em ecrã inteiro — uma por página com deslocamento ao estilo TikTok.",
+    description:
+      "Escolhe uma categoria e explora perguntas de conversa profunda em ecrã inteiro — uma por página com deslocamento ao estilo TikTok.",
   },
 };
 
@@ -173,11 +204,15 @@ const IconSize = 36;
 
 function getCategoryIconByKey(key: CategoryKey) {
   switch (key) {
-    case "friendship": return <Handshake size={IconSize} strokeWidth={2} className="icon icon--emerald" />;
-    case "love":       return <Heart     size={IconSize} strokeWidth={2} className="icon icon--rose" />;
-    case "identity":   return <UserCircle size={IconSize} strokeWidth={2} className="icon icon--violet" />;
+    case "friendship":
+      return <Handshake size={IconSize} strokeWidth={2} className="icon icon--emerald" />;
+    case "love":
+      return <Heart size={IconSize} strokeWidth={2} className="icon icon--rose" />;
+    case "identity":
+      return <UserCircle size={IconSize} strokeWidth={2} className="icon icon--violet" />;
     case "goals":
-    default:           return <Target    size={IconSize} strokeWidth={2} className="icon icon--amber" />;
+    default:
+      return <Target size={IconSize} strokeWidth={2} className="icon icon--amber" />;
   }
 }
 
@@ -225,13 +260,18 @@ export default function DeepTalkApp() {
   }, [selectedLanguage]);
 
   /* ===== Kategorie auswählen ===== */
-  const selectCategory = useCallback((key: CategoryKey) => {
-    setSelectedKey(key);
-    const d = getQuestions(selectedLanguage, key);
-    setDeck(d);
-    setCurrentIndex(0);
-    setTimeout(() => { document.getElementById("q-0")?.scrollIntoView({ behavior: "smooth" }); }, 0);
-  }, [selectedLanguage]);
+  const selectCategory = useCallback(
+    (key: CategoryKey) => {
+      setSelectedKey(key);
+      const d = getQuestions(selectedLanguage, key);
+      setDeck(d);
+      setCurrentIndex(0);
+      setTimeout(() => {
+        document.getElementById("q-0")?.scrollIntoView({ behavior: "smooth" });
+      }, 0);
+    },
+    [selectedLanguage]
+  );
 
   /* ===== Zurück ins Menü ===== */
   const goBackToMenu = useCallback(() => {
@@ -247,17 +287,27 @@ export default function DeepTalkApp() {
     setCurrentIndex((prev) => (prev + 1 < deck.length ? prev + 1 : prev)); // kein Wrap
   }, [deck.length]);
 
-  const lastQuestionRef = useCallback((node: HTMLDivElement | null) => {
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) showNext();
-    }, { threshold: 0.8 });
-    if (node) observer.current.observe(node);
-  }, [showNext]);
+  const lastQuestionRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) showNext();
+        },
+        { threshold: 0.8 }
+      );
+      if (node) observer.current.observe(node);
+    },
+    [showNext]
+  );
 
   // Kategorienanzeige: feste Reihenfolge, lokalisierter Name
   const localizedCategories = useMemo(
-    () => CATEGORY_ORDER.map((key) => ({ key, title: getLocalizedCategoryName(selectedLanguage, key) })),
+    () =>
+      CATEGORY_ORDER.map((key) => ({
+        key,
+        title: getLocalizedCategoryName(selectedLanguage, key),
+      })),
     [selectedLanguage]
   );
   const texts = landingText[selectedLanguage];
@@ -299,8 +349,22 @@ export default function DeepTalkApp() {
       )}
 
       {/* Toolbar: Sprache + Theme */}
-      <div style={{ position: "fixed", top: 10, right: 10, zIndex: 100, display: "flex", gap: 10, alignItems: "center" }}>
-        <FlagDropdownButton language={selectedLanguage} setLanguage={setSelectedLanguage} languageConfig={languageConfig} />
+      <div
+        style={{
+          position: "fixed",
+          top: 10,
+          right: 10,
+          zIndex: 100,
+          display: "flex",
+          gap: 10,
+          alignItems: "center",
+        }}
+      >
+        <FlagDropdownButton
+          language={selectedLanguage}
+          setLanguage={setSelectedLanguage}
+          languageConfig={languageConfig}
+        />
         <button
           onClick={() => setTheme((t) => (t === "light" ? "dark" : "light"))}
           title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
@@ -318,7 +382,9 @@ export default function DeepTalkApp() {
           }}
         >
           {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-          <span style={{ fontSize: 12, fontWeight: 600 }}>{theme === "light" ? "Dark" : "Light"}</span>
+          <span style={{ fontSize: 12, fontWeight: 600 }}>
+            {theme === "light" ? "Dark" : "Light"}
+          </span>
         </button>
       </div>
 
@@ -347,11 +413,18 @@ export default function DeepTalkApp() {
       )}
 
       {/* Landing */}
-      <section className="shell shell--center" style={{ height: "100vh", scrollSnapAlign: "start" }}>
+      <section
+        className="shell shell--center"
+        style={{ height: "100vh", scrollSnapAlign: "start" }}
+      >
         <div>
           <h1 className="hero__title">{texts.mainTitle}</h1>
-          <p style={{ margin: "8px 0", fontStyle: "italic", fontSize: "1.2rem" }}>{texts.subTitle}</p>
-          <p style={{ fontSize: "0.9rem", maxWidth: "600px", margin: "0 auto" }}>{texts.description}</p>
+          <p style={{ margin: "8px 0", fontStyle: "italic", fontSize: "1.2rem" }}>
+            {texts.subTitle}
+          </p>
+          <p style={{ fontSize: "0.9rem", maxWidth: "600px", margin: "0 auto" }}>
+            {texts.description}
+          </p>
         </div>
       </section>
 
@@ -380,19 +453,34 @@ export default function DeepTalkApp() {
                     style={{ textAlign: "left", cursor: "pointer", width: "100%" }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minWidth: `${IconSize + 6}px` }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          minWidth: `${IconSize + 6}px`,
+                        }}
+                      >
                         {Icon}
                       </div>
                       <div style={{ flex: 1 }}>
-                        <h2 className="card__title" style={{ margin: 0 }}>{title}</h2>
+                        <h2 className="card__title" style={{ margin: 0 }}>
+                          {title}
+                        </h2>
                         <p className="card__text">
                           {/* kurze Beschreibung je Sprache */}
-                          {selectedLanguage === "Englisch" && `Prompts and questions about “${title}” — great for deeper conversations.`}
-                          {selectedLanguage === "Deutsch" && `Fragen und Impulse rund um „${title}“ – ideal für tiefere Gespräche.`}
-                          {selectedLanguage === "Spanisch" && `Preguntas e ideas sobre «${title}», perfectas para conversaciones más profundas.`}
-                          {selectedLanguage === "Türkisch" && `“${title}” üzerine sorular ve düşünce kıvılcımları — derin sohbetler için ideal.`}
-                          {selectedLanguage === "Französisch" && `Questions et inspirations autour de « ${title} » — parfait pour des échanges plus profonds.`}
-                          {selectedLanguage === "Portugiesisch" && `Perguntas e ideias sobre “${title}” — ideal para conversas mais profundas.`}
+                          {selectedLanguage === "Englisch" &&
+                            `Prompts and questions about “${title}” — great for deeper conversations.`}
+                          {selectedLanguage === "Deutsch" &&
+                            `Fragen und Impulse rund um „${title}“ – ideal für tiefere Gespräche.`}
+                          {selectedLanguage === "Spanisch" &&
+                            `Preguntas e ideas sobre «${title}», perfectas para conversaciones más profundas.`}
+                          {selectedLanguage === "Türkisch" &&
+                            `“${title}” üzerine sorular ve düşünce kıvılcımları — derin sohbetler için ideal.`}
+                          {selectedLanguage === "Französisch" &&
+                            `Questions et inspirations autour de « ${title} » — parfait pour des échanges plus profonds.`}
+                          {selectedLanguage === "Portugiesisch" &&
+                            `Perguntas e ideias sobre “${title}” — ideal para conversas mais profundas.`}
                         </p>
                       </div>
                     </div>
@@ -426,13 +514,25 @@ export default function DeepTalkApp() {
                   padding: "24px",
                 }}
               >
-                <div className={`card ${CARD_BG_CLASSES[key]}`} style={{ width: "min(900px, 94%)" }}>
+                <div
+                  className={`card ${CARD_BG_CLASSES[key]}`}
+                  style={{ width: "min(900px, 94%)" }}
+                >
                   <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minWidth: `${IconSize + 6}px` }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minWidth: `${IconSize + 6}px`,
+                      }}
+                    >
                       {Icon}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <h2 className="card__title" style={{ margin: 0 }}>{title}</h2>
+                      <h2 className="card__title" style={{ margin: 0 }}>
+                        {title}
+                      </h2>
                       <p className="card__text">{question}</p>
                     </div>
                   </div>

@@ -5,13 +5,10 @@ export async function GET(request) {
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    return new Response(
-      JSON.stringify({ error: "Missing OpenAI key" }),
-      {
-        status: 500,
-        headers: { "content-type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ error: "Missing OpenAI key" }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
   }
 
   const prompt = `Stelle eine tiefgründige Frage aus der Kategorie "${category}" auf ${lang}.`;
@@ -36,23 +33,17 @@ export async function GET(request) {
   if (!openaiRes.ok) {
     const errorText = await openaiRes.text();
     console.error("OpenAI error:", errorText);
-    return new Response(
-      JSON.stringify({ error: "OpenAI request failed" }),
-      {
-        status: 500,
-        headers: { "content-type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ error: "OpenAI request failed" }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
   }
 
   const data = await openaiRes.json();
   const question = data.choices?.[0]?.message?.content?.trim();
 
-  return new Response(
-    JSON.stringify({ question }),
-    {
-      status: 200,
-      headers: { "content-type": "application/json" },
-    }
-  );
+  return new Response(JSON.stringify({ question }), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+  });
 }
