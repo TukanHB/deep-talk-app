@@ -2,8 +2,16 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { UserCircle, Heart, Target, Handshake, ArrowLeft, Moon, Sun } from "lucide-react";
-import { questionsByLanguage } from "../data";
+import questionsEN from "../data/questions.EN.json";
+import questionsDE from "../data/questions.DE.json";
+import questionsES from "../data/questions.ES.json";
+import questionsTR from "../data/questions.TR.json";
+import questionsFR from "../data/questions.FR.json";
+import questionsPT from "../data/questions.PT.json";
 import FlagDropdownButton from "./FlagDropdownButton";
+import { questionsByLanguage } from "@/data/questionsByLanguage";
+
+// If you need to import JSON files, ensure your tsconfig.json has "resolveJsonModule": true and "esModuleInterop": true in compilerOptions.
 
 /* =========================
    Types
@@ -67,62 +75,6 @@ const landingText: Record<
     description:
       "Bir kategori seç ve tam ekran derin sohbet sorularını keşfet — TikTok tarzı, sayfa başına bir soru ve snap kaydırma.",
   },
-  Französich: {
-    // Schreibweise-Fallback
-    mainTitle: "Bienvenue sur Cogito !",
-    subTitle: "Vox Cogitationis – La voix de la pensée",
-    description:
-      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
-  } as any,
-  Französische: {
-    // weiterer Fallback
-    mainTitle: "Bienvenue sur Cogito !",
-    subTitle: "Vox Cogitationis – La voix de la pensée",
-    description:
-      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
-  } as any,
-  Französözisch: {
-    // weiterer Fallback
-    mainTitle: "Bienvenue sur Cogito !",
-    subTitle: "Vox Cogitationis – La voix de la pensée",
-    description:
-      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
-  } as any,
-  Französischer: {
-    // weiterer Fallback
-    mainTitle: "Bienvenue sur Cogito !",
-    subTitle: "Vox Cogitationis – La voix de la pensée",
-    description:
-      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
-  } as any,
-  FranzösischeR: {
-    // weiterer Fallback
-    mainTitle: "Bienvenue sur Cogito !",
-    subTitle: "Vox Cogitationis – La voix de la pensée",
-    description:
-      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
-  } as any,
-  FranzösischerX: {
-    // weiterer Fallback
-    mainTitle: "Bienvenue sur Cogito !",
-    subTitle: "Vox Cogitationis – La voix de la pensée",
-    description:
-      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
-  } as any,
-  Französisches: {
-    // weiterer Fallback
-    mainTitle: "Bienvenue sur Cogito !",
-    subTitle: "Vox Cogitationis – La voix de la pensée",
-    description:
-      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
-  } as any,
-  Französischerinnen: {
-    // weiterer Fallback
-    mainTitle: "Bienvenue sur Cogito !",
-    subTitle: "Vox Cogitationis – La voix de la pensée",
-    description:
-      "Choisis une catégorie et découvre des questions de deep-talk en plein écran — une par page avec un défilement façon TikTok.",
-  } as any,
   Französisch: {
     mainTitle: "Bienvenue sur Cogito !",
     subTitle: "Vox Cogitationis – La voix de la pensée",
