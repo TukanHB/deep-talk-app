@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Cogito",
+    "slug": "cogito",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "platforms": ["ios", "android", "web"],
+    "scheme": "cogito",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fdf6f0"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.handanbirel.cogito",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.handanbirel.cogito",
+      "versionCode": 1
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "feda91c2-cdd1-4a92-b8eb-5ab224401468"
+      }
+    }
+  }
+}
