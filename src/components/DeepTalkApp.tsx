@@ -9,7 +9,7 @@ import questionsTR from "../data/questions.TR.json";
 import questionsFR from "../data/questions.FR.json";
 import questionsPT from "../data/questions.PT.json";
 import FlagDropdownButton from "./FlagDropdownButton";
-import { questionsByLanguage } from "@/data/questionsByLanguage";
+import { questionsByLanguage } from "cogito-mobile/assets/questionsByLanguage";
 
 // If you need to import JSON files, ensure your tsconfig.json has "resolveJsonModule": true and "esModuleInterop": true in compilerOptions.
 
